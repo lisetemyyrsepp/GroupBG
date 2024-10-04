@@ -126,6 +126,7 @@ a {
 
 .nav {
     margin-top: 5px;
+    font-size:larger;
 }
 
 .nav a {
@@ -185,4 +186,54 @@ footer {
     font-size: 1em;
     border-radius: 10px;
     z-index: 1000;
+}
+
+.sides {
+    width: 10%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.login-header {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.possible-button {
+    color: rgb(107, 203, 235);
+    margin-bottom: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.button button {
+    background-color: rgb(12, 76, 160);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+     
+}
+
+input::placeholder {
+    color: lightgray;
+}
+
+#email {
+    width: 90px;
+    height: 20px;
+    border: none;
+    padding: 5px 10px;
+    margin-bottom: -5px;
+}
+
+#password {
+    width: 90px;
+    height: 20px;
+    border: none;
+    padding: 5px 10px;
+    margin-bottom: -5px;
 }
