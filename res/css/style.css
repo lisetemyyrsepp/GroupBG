@@ -32,14 +32,12 @@ body {
     text-align: center;
 }
 
-.post {
+.defaultBox {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     background-color: lightgray;
-    padding: 20px;
     margin-bottom: 20px;
-    border-radius: 10px;
     position: relative;
 }
 
@@ -122,11 +120,16 @@ a {
     background-color: lightgray;
     border-radius: 10px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .nav {
     margin-top: 5px;
     font-size:larger;
+    display: flex;
+    justify-content: left;
 }
 
 .nav a {
@@ -188,12 +191,6 @@ footer {
     z-index: 1000;
 }
 
-.sides {
-    width: 10%;
-    padding: 10px;
-    border-radius: 10px;
-}
-
 .login-header {
     font-weight: 700;
     margin-bottom: 10px;
@@ -236,4 +233,52 @@ input::placeholder {
     border: none;
     padding: 5px 10px;
     margin-bottom: -5px;
+}
+
+.addPostForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.inputOptionsContainer {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+    margin-bottom: 2em;
+}
+
+.inputOptionsContainer > label {
+    justify-self: right;
+    grid-column: 1;
+    margin: 0.5em;
+}
+
+label ~ textarea {
+    height: 10em;
+    justify-self: left;
+    grid-column: 2;
+    margin: 0.5em;
+    resize: vertical;
+    width: 80%;
+}
+
+label + .fileInputWrapper {
+    justify-self: left;
+    grid-column: 2;
+    margin: 0.5em;
+}
+
+.fileInputWrapper {
+    background-color: #7f7f7f;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.fileInputWrapper input{
+    display: None;
+}
+
+.center {
+    justify-content: center;
 }
