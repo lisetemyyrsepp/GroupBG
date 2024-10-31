@@ -1,0 +1,66 @@
+[
+    {
+        "authorImage": "res/images/profile1.jpg",
+        "date": "Oct 22, 2022",
+        "image": "res/images/post1.jpg",
+        "caption": "Tartu 2024",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile2.jpg",
+        "date": "Oct 2, 2022",
+        "caption": "Anyone knows in which room is the lab today?",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile3.jfif",
+        "date": "Feb 10, 2014",
+        "caption": "Have you ever thought you were in love with someone but then realized you were just staring in a mirror for 20 minutes?",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile4.jpg",
+        "date": "Oct 2, 2024",
+        "image": "res/images/post4.jpg",
+        "caption": "This is Rexie The Cat, known for his hilarious facial expressions",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile5.jfif",
+        "date": "Mar 13, 2013",
+        "caption": "HABEMUS PAPAM FRANCISCUM",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile6.jpg",
+        "image": "res/images/post6.jpg",
+        "date": "Apr 5, 2021",
+        "caption": "Exploring new trails and enjoying the beauty of nature!",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile7.jpg",
+        "date": "May 12, 2022",
+        "caption": "Does anyone know if the library is open today? Trying to get some studying done!",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile8.jpg",
+        "date": "Jul 19, 2023",
+        "caption": "Just started learning a Japanese! Excited to see where this journey takes me.",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile9.jpg",
+        "date": "Dec 25, 2020",
+        "caption": "Wishing everyone a Merry Christmas!",
+        "likes": 0
+    },
+    {
+        "authorImage": "res/images/profile10.jpg",
+        "image": "res/images/post10.jpg",
+        "date": "Nov 2, 2019",
+        "caption": "Throwback to my favorite concert ever!",
+        "likes": 0
+    }
+]
