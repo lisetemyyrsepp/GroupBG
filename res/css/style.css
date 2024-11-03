@@ -1,32 +1,99 @@
-*{
-    font-family: FreeMono, monospace;
+:root {
+    --text-color: #ffffff;
+    --primary-color: #499899;
+    --primary-shadow: #204444;
+    --secondary-color: #589949;
+    --secondary-shadow: #274420;
+    --background-color: #282828;
+    --box-color: #465050;
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    padding-top: 6em;
+    font-family: Arial, serif;
+    color: var(--text-color);
     line-height:1.6;
-    margin: 5px;
+    margin: 0;
+    background-color: var(--background-color);
 }
 
-.layout {
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background: var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-color) 50%, var(--secondary-color) 100%);
+    border-radius: 0 0 10px 10px;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: auto;
+    transform-style: preserve-3d;
 }
 
-.sidebar {
+.header::before {
+    content: "";
+    position: absolute;
+    inset: -0.2em;
+    background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
+    filter: blur(1em);
+    transform: translate3d(0px, 0px, -10px);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background: var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-color) 50%, var(--secondary-color) 100%);
+    border-radius: 10px 10px 0 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    inset: -0.2em;
+    background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
+    filter: blur(1em);
+    transform: translate3d(0px, 0px, -10px);
+}
+
+.sidebar-left {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 10%;
-    background-color: lightgray;
-    padding: 10px;
-    border-radius: 10px;
+    height: 100vh;
+    background-color: var(--box-color);
+    z-index: 1;
+}
+
+.sidebar-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 100vh;
+    background-color: var(--box-color);
+    z-index: 1;
 }
 
 .content {
     display: flex;
     flex-direction: column;
     width: 60%;
-    background-color: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -36,7 +103,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    background-color: lightgray;
+    background-color: var(--box-color);
     margin-bottom: 20px;
     position: relative;
 }
@@ -49,14 +116,13 @@ body {
 }
 
 .post-profile-pic {
-    width: 50px;
-    height: 50px;
+    width: 64px;
+    height: 64px;
     border-radius: 15%;
 }
 
 .post-date {
     font-size: 0.9em;
-    color: black;
 }
 
 .post-image {
@@ -91,16 +157,17 @@ ul {
 }
 
 a {
-    color: black;
+    color: var(--text-color);
     text-decoration: none;
 }
 
-.logo {
-    margin: 0 10px 0 0;
-    font-size: 1.1em;
+.profile-picture {
+    margin-right: 0.5em;
+    display: flex;
+    justify-content: left;
 }
 
-.logo img {
+.profile-picture img {
     border-radius: 15%
 }
 
@@ -110,26 +177,11 @@ a {
     display: block;
 }*/
 
-.header {
-    position: sticky;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    padding-top: .5em;
-    padding-bottom: .5em;
-    background-color: lightgray;
-    border-radius: 10px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-}
-
 .nav {
-    margin-top: 5px;
-    font-size:larger;
     display: flex;
     justify-content: left;
+    font-size:larger;
+    margin-left: 0.5em;
 }
 
 .nav a {
@@ -140,8 +192,8 @@ a {
 }
 
 .nav a:hover {
-    background-color: azure;
-    color: gray;
+    background-color: var(--secondary-color);
+    color: darkgray;
     border-radius: 20px;
 }
 
@@ -174,23 +226,6 @@ a {
     }
 }
 
-
-footer {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: lightgray;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1px 0;
-    font-size: 1em;
-    border-radius: 10px;
-    z-index: 1000;
-}
-
 .login-header {
     font-weight: 700;
     margin-bottom: 10px;
@@ -208,7 +243,6 @@ p {
 
 .button button {
     background-color: rgb(12, 76, 160);
-    color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
