@@ -68,3 +68,9 @@ window.onload = function() {
             document.getElementById('posts-container').appendChild(errDiv);
         })
 }
+
+// Function to toggle the dropdown menu
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdown");
+    dropdown.classList.toggle("show");
+}
