@@ -334,3 +334,45 @@ label + .fileInputWrapper {
 .dropdown-content.show {
     display: block;
 }
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: beige;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.error p{
+    font-weight: bold;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reset-likes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#reset-likes-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#reset-likes-button:hover {
+    background-color: #0056b3;
+}

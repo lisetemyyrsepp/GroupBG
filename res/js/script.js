@@ -54,7 +54,18 @@ window.onload = function() {
                 likeButton.src = "res/images/Facebook_Thumb_icon.svg.png";
                 likeButton.alt = "Like Button";
 
+                const likesCount = document.createElement('span');
+                likesCount.className = 'likes-count';
+                likesCount.innerText = ' 0 Likes';
+
+                let likes = 0;
+                likeButton.addEventListener('click', () => {
+                    likes++;
+                    likesCount.innerText = ` ${likes} Likes`;
+                });
+
                 postFooter.appendChild(likeButton);
+                postFooter.appendChild(likesCount);
                 divToHoldSinglePost.appendChild(postFooter);
 
                 postsContainer.appendChild(divToHoldSinglePost);
@@ -67,6 +78,14 @@ window.onload = function() {
             errDiv.innerText = `Error fetching posts: ${err}`;
             document.getElementById('posts-container').appendChild(errDiv);
         })
+
+    // Reset Likes Functionality
+    document.getElementById('reset-likes-button').addEventListener('click', () => {
+        const likesCounts = document.querySelectorAll('.likes-count');
+        likesCounts.forEach((likesCount) => {
+            likesCount.innerText = ' 0 Likes';
+        });
+    });
 }
 
 // Function to toggle the dropdown menu
@@ -74,3 +93,51 @@ function toggleDropdown() {
     const dropdown = document.getElementById("dropdown");
     dropdown.classList.toggle("show");
 }
+
+document.getElementById('signupForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form from submitting initially
+
+    const password = document.getElementById('password').value;
+    const errorMessages = document.getElementById('errorMessages');
+
+    const validatePassword = (password) => {
+        const errors = [];
+        if (password.length < 8 || password.length > 15) {
+            errors.push("Password length should be between 8 and 15 characters.");
+        }
+    
+        if (!/[A-Z]/.test(password)) {
+            errors.push("Password must include at least one uppercase alphabet character.");
+        }
+    
+        if ((password.match(/[a-z]/g) || []).length < 2) {
+            errors.push("Password must include at least two lowercase alphabet characters.");
+        }
+    
+        if (!/[0-9]/.test(password)) {
+            errors.push("Password must include at least one numeric value.");
+        }
+    
+        if (!/^[A-Z]/.test(password)) {
+            errors.push("Password must start with an uppercase alphabet.");
+        }
+    
+        if (!password.includes('_')) {
+            errors.push('Password must include the character "_".');
+        }
+    
+        return errors;
+    };
+
+    const errors = validatePassword(password);
+
+    if (errors.length > 0) {
+        errorMessages.innerHTML = `
+            <p>Password is not valid. Please consider the following requirements:</p>
+            <ul>${errors.map(err => `<li>${err}</li>`).join('')}</ul>
+        `;
+    } else {
+        errorMessages.innerHTML = ''; // Clear errors if valid
+        window.location.href = "index.html"; // Redirect to main page
+    }
+});

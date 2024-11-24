@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/res/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <ul class="nav">
+            <li><a href="login.html">Home</a></li>
+        </ul>
+    </header>
+
+    <div class="content">
+        <div class="defaultBox">
+            <form id="signupForm">
+                <div class="input">
+                    <div class="input-row">
+                        <!--- these should align in a more appealing way-->
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required><br><br>
+                    </div>
+                    <div class="input-row">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required><br><br>
+                    </div>
+                </div>
+                <div class="button">
+                    <button type="submit">Signup</button>
+                </div>
+            </form>
+            <p id="errorMessages" class="error"></p>
+        </div>
+    </div>
+
+    <footer class="footer"></footer>
+    <script src="res/js/script.js"></script>
+</body>
+</html>
