@@ -9,7 +9,6 @@
       :key="post.date" 
       :post="post" 
       @like-post="incrementLike"
-      @reset.likes="resetLike"
       />
     </div>
     </div>
@@ -18,7 +17,7 @@
 
 <script>
 import PostComponent from '@/components/PostComponent.vue';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
@@ -33,7 +32,13 @@ export default {
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']), // Map actions from the posts module
+    ...mapMutations("posts", ["incrementLike", "resetLikes"]),
   },
+
+  resetLikesForAll() {
+      this.resetLikes(); // Resets likes for all posts
+    },
+
   created() {
     this.fetchPosts(); // Fetch posts when the component is created
   },
@@ -304,5 +309,15 @@ label + .fileInputWrapper {
 /* Show class for toggling visibility */
 .dropdown-content.show {
     display: block;
+}
+
+.reset-all-button {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 </style>

@@ -5,59 +5,54 @@ const state = {
 };
 
 const mutations = {
-    SET_POSTS(state, posts) {
-        state.posts = posts;
+    setPosts(state, posts) {
+      state.allPosts = posts;
     },
-    SET_LOADING(state, loading) {
-        state.loading = loading;
+    incrementLike(state, postDate) {
+      const post = state.allPosts.find((p) => p.date === postDate);
+      if (post) {
+        post.likes += 1;
+      }
     },
-    SET_ERROR(state, error) {
-        state.error = error;
+    resetLikes(state) {
+      state.allPosts.forEach((post) => {
+        post.likes = 0;
+      });
     },
-    INCREMENT_LIKE(state, postDate) {
-        const post = state.posts.find((p) => p.date === postDate);
-        if (post) post.likes += 1;
+    setLoading(state, isLoading) {
+      state.isLoading = isLoading;
     },
-    RESET_LIKE(state, postDate) {
-        const post = state.posts.find((p) => p.date === postDate);
-        if (post) post.likes = 0;
+    setError(state, error) {
+      state.error = error;
     },
-};
+  };
 
-const actions = {
+  const actions = {
     async fetchPosts({ commit }) {
-        commit('SET_LOADING', true);
-        try {
-            const response = await fetch('/public/json.json'); 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            commit('SET_POSTS', data);
-        } catch (error) {
-            commit('SET_ERROR', error.message);
-        } finally {
-            commit('SET_LOADING', false);
+      commit("setLoading", true);
+      try {
+        const response = await fetch("/json.json");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+        const data = await response.json();
+        // Add a default likes property if not present
+        const postsWithLikes = data.map((post) => ({
+          ...post,
+          likes: post.likes || 0,
+        }));
+        commit("setPosts", postsWithLikes);
+      } catch (error) {
+        commit("setError", error.message);
+      } finally {
+        commit("setLoading", false);
+      }
     },
-    incrementLike({ commit }, postDate) {
-        commit("INCREMENT_LIKE", postDate);
-    },
-    resetLike({ commit }, postDate) {
-        commit("RESET_LIKE", postDate);
-    },
-};
-
-const getters = {
-    allPosts: (state) => state.posts,
-    isLoading: (state) => state.loading,
-    error: (state) => state.error,
-};
+  };
 
 export default {
     namespaced: true,
     state,
     mutations,
     actions,
-    getters,
-};
+  };

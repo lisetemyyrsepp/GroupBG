@@ -14,7 +14,6 @@
       <div class="post-caption">{{ post.caption }}</div>
       <div class="post-footer">
         <button @click="likePost" class="like-button">👍 {{ post.likes }}</button>
-        <button @click="resetLikes" class="reset-button">Reset likes</button>
       </div>
     </div>
   </template>
@@ -31,9 +30,6 @@
     methods: {
     likePost() {
       this.$emit("like-post", this.post.date);
-    },
-    resetLikes() {
-      this.$emit("reset-likes", this.post.date);
     },
   },
   };
