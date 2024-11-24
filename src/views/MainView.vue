@@ -1,75 +1,40 @@
-:root {
-    --text-color: #ffffff;
-    --primary-color: #499899;
-    --primary-shadow: #204444;
-    --secondary-color: #589949;
-    --secondary-shadow: #274420;
-    --background-color: #282828;
-    --box-color: #465050;
-}
+<template>
+    <div class="sidebar-left"></div>
+    <div class="content" id="posts-container">
+      <div v-if="isLoading">Loading posts...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <PostComponent v-for="post in allPosts" :key="post.date" :post="post" />
+    </div>
+    </div>
+    <div class="sidebar-right"></div>
+</template>
 
-body {
-    display: flex;
-    justify-content: center;
-    padding-top: 6em;
-    font-family: Arial, serif;
-    color: var(--text-color);
-    line-height:1.6;
-    margin: 0;
-    background-color: var(--background-color);
-}
+<script>
+import PostComponent from '@/components/PostComponent.vue';
+import { mapState, mapActions } from 'vuex';
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    background: var(--primary-color);
-    background: linear-gradient(90deg, var(--primary-color) 50%, var(--secondary-color) 100%);
-    border-radius: 0 0 10px 10px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    transform-style: preserve-3d;
-}
+// @ is an alias to /src
+//import HelloWorld from '@/components/HelloWorld.vue'
 
-.header::before {
-    content: "";
-    position: absolute;
-    inset: -0.2em;
-    background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
-    filter: blur(1em);
-    transform: translate3d(0px, 0px, -10px);
+export default {
+  name: 'MainView',
+  components: {
+    PostComponent,
+  },
+  computed: {
+    ...mapState('posts', ['allPosts', 'isLoading', 'error']), // Map state from the posts module
+  },
+  methods: {
+    ...mapActions('posts', ['fetchPosts']), // Map actions from the posts module
+  },
+  created() {
+    this.fetchPosts(); // Fetch posts when the component is created
+  },
 }
+</script>
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    background: var(--primary-color);
-    background: linear-gradient(90deg, var(--primary-color) 50%, var(--secondary-color) 100%);
-    border-radius: 10px 10px 0 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-}
-
-.footer::before {
-    content: "";
-    position: absolute;
-    inset: -0.2em;
-    background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
-    filter: blur(1em);
-    transform: translate3d(0px, 0px, -10px);
-}
-
+<style>
 .sidebar-left {
     position: fixed;
     top: 0;
@@ -334,3 +299,4 @@ label + .fileInputWrapper {
 .dropdown-content.show {
     display: block;
 }
+</style>
