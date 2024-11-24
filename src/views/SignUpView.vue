@@ -22,21 +22,65 @@
           placeholder="Password"
           required
           class="form-input"
+          @input="validatePassword"
         />
+      </div>
+      <div v-if="showError" class="password-checker">
+          <p>Password is not valid. Please consider the following requirements:</p>
+          <ul>
+            <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
+          </ul>
       </div>
       <button type="submit" class="signup-button">Sign Up</button>
     </form>
   </div>
-  </div>
+ </div>
 </template>
 
 <script>
 export default {
+  name: 'SignUpView',
   data() {
     return {
       email: '',
       password: '',
+      passwordErrors: [],
+      showError: false,
     };
+  },
+  methods: {
+    validatePassword() {
+      const errors = [];
+      if (this.password.length < 8 || this.password.length >= 15) {
+        errors.push('Password length should be at least 8 and less than 15 characters.');
+      }
+      if (!/[A-Z]/.test(this.password)) {
+        errors.push('Password must include at least one uppercase alphabet character.');
+      }
+      if ((this.password.match(/[a-z]/g) || []).length < 2) {
+        errors.push('Password must include at least two lowercase alphabet characters.');
+      }
+      if (!/[0-9]/.test(this.password)) {
+        errors.push('Password must include at least one numeric value.');
+      }
+      if (!/^[A-Z]/.test(this.password)) {
+        errors.push('Password must start with an uppercase alphabet.');
+      }
+      if (!this.password.includes('_')) {
+        errors.push('Password must include the character "_".');
+      }
+      this.passwordErrors = errors;
+      this.showError = errors.length > 0;
+    },
+    handleSignup() {
+      this.validatePassword();
+      if (this.passwordErrors.length > 0) {
+        this.showError = true;
+      } else {
+        this.showError = false;
+        alert("Signup successful!");
+      }
+    },
   },
 };
 </script>
@@ -118,5 +162,23 @@ input::placeholder {
 
 .signup-button:hover {
   background-color: #45a049;
+}
+
+.password-checker {
+  display: block;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 0.9em;
+  color: #ff4d4d;
+}
+
+.password-checker ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.password-checker li {
+  margin-bottom: 5px;
 }
 </style>

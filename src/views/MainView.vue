@@ -4,7 +4,13 @@
       <div v-if="isLoading">Loading posts...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <PostComponent v-for="post in allPosts" :key="post.date" :post="post" />
+      <PostComponent 
+      v-for="post in allPosts" 
+      :key="post.date" 
+      :post="post" 
+      @like-post="incrementLike"
+      @reset.likes="resetLike"
+      />
     </div>
     </div>
     <div class="sidebar-right"></div>
