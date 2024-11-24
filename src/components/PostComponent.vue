@@ -8,9 +8,7 @@
           <span class="post-date">{{ post.date }}</span>
         </div>
       </div>
-      <div v-if="post.image" class="post-image">
-        <img :src="post.image" alt="Post image" />
-      </div>
+        <img v-if="post.image" class="post-image" :src="post.image" alt="Post image" />
       <div class="post-caption">{{ post.caption }}</div>
       <div class="post-footer">
         <button @click="likePost" class="like-button">👍 {{ post.likes }}</button>
@@ -45,16 +43,50 @@
   }
 
   .reset-button {
-    background-color: blue;
+    background-color: var(--primary-color);
     color: white;
   }
 
-  .defaultBox {
-    padding: 20px;
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .post-profile-pic {
+    width: 64px;
+    height: 64px;
+    border-radius: 15%;
+  }
+
+  .post-date {
+    font-size: 0.9em;
+  }
+
+  .post-image {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
     border-radius: 10px;
-    text-align: center;
-    background-color: var(--box-color);
-    margin-bottom: 20px;
-    position: relative;
+  }
+
+  .post-caption, .post-message {
+    font-size: 1em;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .post-footer {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  .like-button {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+    background-color: var(--secondary-color);
   }
   </style>

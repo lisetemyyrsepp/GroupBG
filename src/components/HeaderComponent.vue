@@ -9,15 +9,6 @@
 </template>
 
 <style>
-    :root {
-    --text-color: #ffffff;
-    --primary-color: #499899;
-    --primary-shadow: #204444;
-    --secondary-color: #589949;
-    --secondary-shadow: #274420;
-    --background-color: #282828;
-    --box-color: #465050;
-}
 
 .header {
     position: fixed;
@@ -44,19 +35,6 @@
     filter: blur(1em);
     transform: translate3d(0px, 0px, -10px);
 }
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-}
-
-/*a {
-    color: var(--text-color);
-    text-decoration: none;
-}*/
 
 .nav {
     display: flex;

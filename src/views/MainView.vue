@@ -3,7 +3,6 @@
     <div class="sidebar-left"></div>
     <div class="content">
       <div v-if="isLoading">Loading posts...</div>
-<<<<<<< HEAD
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
         <PostComponent
@@ -11,20 +10,9 @@
             :key="post.date"
             :post="post"
             @like-post="incrementLike"
-            @reset.likes="resetLike"
+            @reset.likes="resetLikes"
         />
       </div>
-=======
-    <div v-else-if="error">{{ error }}</div>
-    <div v-else>
-      <PostComponent 
-      v-for="post in allPosts" 
-      :key="post.date" 
-      :post="post" 
-      @like-post="incrementLike"
-      />
-    </div>
->>>>>>> lisete
     </div>
     <div class="sidebar-right"></div>
   </div>
@@ -32,11 +20,7 @@
 
 <script>
 import PostComponent from '@/components/PostComponent.vue';
-<<<<<<< HEAD
-import {mapActions, mapGetters} from 'vuex';
-=======
-import { mapState, mapMutations, mapActions } from 'vuex';
->>>>>>> lisete
+import {mapGetters, mapMutations, mapActions } from 'vuex';
 
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
@@ -60,7 +44,7 @@ export default {
 
   created() {
     this.fetchPosts(); // Fetch posts when the component is created
-  }
+  },
 }
 </script>
 
@@ -98,59 +82,6 @@ export default {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-}
-
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.post-profile-pic {
-    width: 64px;
-    height: 64px;
-    border-radius: 15%;
-}
-
-.post-date {
-    font-size: 0.9em;
-}
-
-.post-image {
-    width: 100%;
-    height: auto;
-    margin-top: 10px;
-    border-radius: 10px;
-}
-
-.post-caption, .post-message {
-    font-size: 1em;
-    margin-top: 10px;
-    text-align: left;
-}
-
-.post-footer {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 10px;
-}
-
-.like-button {
-    width: 50px;
-    height: auto;
-    cursor: pointer;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-a {
-    color: var(--text-color);
-    text-decoration: none;
 }
 
 .profile-picture {
@@ -202,13 +133,6 @@ a {
     .header {
         flex-direction: row;
         align-items: center;
-    }
-}
-
-@media (min-width: 1000px) {
-    .header {
-        flex-direction: row;
-        justify-content: space-between;
     }
 }
 

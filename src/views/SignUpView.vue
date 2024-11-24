@@ -1,37 +1,39 @@
 <template>
-  <div class="defaultBox">
-  <form @submit.prevent="handleSignup">
-    <div class="form-group">
-      <label for="email" class="form-label">Email</label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-        placeholder="Email"
-        required
-        class="form-input"
-      />
+  <div class="main">
+    <div class="defaultBox">
+      <form @submit.prevent="handleSignup">
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input
+              type="email"
+              id="email"
+              v-model="email"
+              placeholder="Email"
+              required
+              class="form-input"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+              type="password"
+              id="password"
+              v-model="password"
+              placeholder="Password"
+              required
+              class="form-input"
+              @input="validatePassword"
+          />
+        </div>
+        <div v-if="showError" class="password-checker">
+          <p>Password is not valid. Please consider the following requirements:</p>
+          <ul>
+            <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
+          </ul>
+        </div>
+        <button type="submit" class="signup-button">Sign Up</button>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="password" class="form-label">Password</label>
-      <input
-        type="password"
-        id="password"
-        v-model="password"
-        placeholder="Password"
-        required
-        class="form-input"
-        @input="validatePassword"
-      />
-    </div>
-    <div v-if="showError" class="password-checker">
-        <p>Password is not valid. Please consider the following requirements:</p>
-        <ul>
-          <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
-        </ul>
-    </div>
-    <button type="submit" class="signup-button">Sign Up</button>
-  </form>
   </div>
 </template>
 
@@ -84,15 +86,6 @@ export default {
 </script>
 
 <style>
-:root {
-    --text-color: #ffffff;
-    --primary-color: #499899;
-    --primary-shadow: #204444;
-    --secondary-color: #589949;
-    --secondary-shadow: #274420;
-    --background-color: #282828;
-    --box-color: #465050;
-}
 
 body {
     display: flex;
