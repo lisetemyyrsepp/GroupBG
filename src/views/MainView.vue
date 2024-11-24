@@ -3,6 +3,7 @@
     <div class="sidebar-left"></div>
     <div class="content">
       <div v-if="isLoading">Loading posts...</div>
+<<<<<<< HEAD
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
         <PostComponent
@@ -13,6 +14,17 @@
             @reset.likes="resetLike"
         />
       </div>
+=======
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <PostComponent 
+      v-for="post in allPosts" 
+      :key="post.date" 
+      :post="post" 
+      @like-post="incrementLike"
+      />
+    </div>
+>>>>>>> lisete
     </div>
     <div class="sidebar-right"></div>
   </div>
@@ -20,7 +32,11 @@
 
 <script>
 import PostComponent from '@/components/PostComponent.vue';
+<<<<<<< HEAD
 import {mapActions, mapGetters} from 'vuex';
+=======
+import { mapState, mapMutations, mapActions } from 'vuex';
+>>>>>>> lisete
 
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
@@ -35,7 +51,13 @@ export default {
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']), // Map actions from the posts module
+    ...mapMutations("posts", ["incrementLike", "resetLikes"]),
   },
+
+  resetLikesForAll() {
+      this.resetLikes(); // Resets likes for all posts
+    },
+
   created() {
     this.fetchPosts(); // Fetch posts when the component is created
   }
@@ -304,4 +326,56 @@ label + .fileInputWrapper {
 .dropdown-content.show {
     display: block;
 }
+
+.reset-all-button {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
 </style>
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: beige;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.error p{
+    font-weight: bold;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reset-likes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#reset-likes-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#reset-likes-button:hover {
+    background-color: #0056b3;
+}
