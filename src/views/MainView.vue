@@ -1,24 +1,26 @@
 <template>
+  <div class="main">
     <div class="sidebar-left"></div>
-    <div class="content" id="posts-container">
+    <div class="content">
       <div v-if="isLoading">Loading posts...</div>
-    <div v-else-if="error">{{ error }}</div>
-    <div v-else>
-      <PostComponent 
-      v-for="post in allPosts" 
-      :key="post.date" 
-      :post="post" 
-      @like-post="incrementLike"
-      @reset.likes="resetLike"
-      />
-    </div>
+      <div v-else-if="error">{{ error }}</div>
+      <div v-else>
+        <PostComponent
+            v-for="post in allPosts"
+            :key="post.date"
+            :post="post"
+            @like-post="incrementLike"
+            @reset.likes="resetLike"
+        />
+      </div>
     </div>
     <div class="sidebar-right"></div>
+  </div>
 </template>
 
 <script>
 import PostComponent from '@/components/PostComponent.vue';
-import { mapState, mapActions } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
@@ -29,18 +31,24 @@ export default {
     PostComponent,
   },
   computed: {
-    ...mapState('posts', ['allPosts', 'isLoading', 'error']), // Map state from the posts module
+    ...mapGetters('posts', ['allPosts', 'isLoading', 'error']), // Map state from the posts module
   },
   methods: {
     ...mapActions('posts', ['fetchPosts']), // Map actions from the posts module
   },
   created() {
     this.fetchPosts(); // Fetch posts when the component is created
-  },
+  }
 }
 </script>
 
 <style>
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .sidebar-left {
     position: fixed;
     top: 0;
@@ -68,15 +76,6 @@ export default {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-}
-
-.defaultBox {
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    background-color: var(--box-color);
-    margin-bottom: 20px;
-    position: relative;
 }
 
 .post-header {

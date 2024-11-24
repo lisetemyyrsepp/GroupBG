@@ -1,40 +1,38 @@
 <template>
-  <div class="content">
-    <div class="defaultBox">
-    <form @submit.prevent="handleSignup">
-      <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model="email"
-          placeholder="Email"
-          required
-          class="form-input"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="Password"
-          required
-          class="form-input"
-          @input="validatePassword"
-        />
-      </div>
-      <div v-if="showError" class="password-checker">
-          <p>Password is not valid. Please consider the following requirements:</p>
-          <ul>
-            <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
-          </ul>
-      </div>
-      <button type="submit" class="signup-button">Sign Up</button>
-    </form>
+  <div class="defaultBox">
+  <form @submit.prevent="handleSignup">
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="email"
+        v-model="email"
+        placeholder="Email"
+        required
+        class="form-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        v-model="password"
+        placeholder="Password"
+        required
+        class="form-input"
+        @input="validatePassword"
+      />
+    </div>
+    <div v-if="showError" class="password-checker">
+        <p>Password is not valid. Please consider the following requirements:</p>
+        <ul>
+          <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
+        </ul>
+    </div>
+    <button type="submit" class="signup-button">Sign Up</button>
+  </form>
   </div>
- </div>
 </template>
 
 <script>
@@ -105,15 +103,6 @@ body {
     line-height:1.6;
     margin: 0;
     background-color: var(--background-color);
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
 }
 
 .defaultBox {

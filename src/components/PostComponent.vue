@@ -45,10 +45,20 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-bottom: 20px;
-    background-color: #fff;
+    background-color: var(--box-color);
   }
+
   .reset-button {
     background-color: blue;
     color: white;
+  }
+
+  .defaultBox {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--box-color);
+    margin-bottom: 20px;
+    position: relative;
   }
   </style>

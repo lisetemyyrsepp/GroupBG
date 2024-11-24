@@ -28,7 +28,7 @@ const actions = {
     async fetchPosts({ commit }) {
         commit('SET_LOADING', true);
         try {
-            const response = await fetch('/public/json.json'); 
+            const response = await fetch('/json.json');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

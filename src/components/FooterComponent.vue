@@ -33,12 +33,12 @@ export default {
     transform-style: preserve-3d;
     }
 
-    .footer::before {
-        content: "";
-        position: absolute;
-        inset: -0.2em;
-        background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
-        filter: blur(1em);
-        transform: translate3d(0px, 0px, -10px);
+  .footer::before {
+    content: "";
+    position: absolute;
+    inset: -0.2em;
+    background: linear-gradient(90deg, var(--primary-shadow) 50%, var(--secondary-shadow) 100%);
+    filter: blur(1em);
+    transform: translate3d(0px, 0px, -10px);
     }
 </style>
