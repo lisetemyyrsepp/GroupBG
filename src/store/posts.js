@@ -14,6 +14,17 @@ const mutations = {
     SET_ERROR(state, error) {
         state.error = error;
     },
+    INCREMENT_LIKE(state, date) {
+        const post = state.posts.find((p) => p.date === date);
+        if (post) {
+          post.likes += 1;
+        }
+      },
+      RESET_LIKES(state) {
+        state.posts.forEach((post) => {
+          post.likes = 0;
+        });
+      },
 };
 
 const actions = {

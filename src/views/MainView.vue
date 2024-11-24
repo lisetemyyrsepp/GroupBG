@@ -12,6 +12,9 @@
             @like-post="incrementLike"
             @reset.likes="resetLikes"
         />
+        <div id="reset-likes-container">
+          <button id="reset-likes-button" @click="resetLikes">Reset All Likes</button>
+        </div>
       </div>
     </div>
     <div class="sidebar-right"></div>
@@ -31,19 +34,21 @@ export default {
     PostComponent,
   },
   computed: {
-    ...mapGetters('posts', ['allPosts', 'isLoading', 'error']), // Map state from the posts module
+    ...mapGetters('posts', ['allPosts', 'isLoading', 'error']), 
   },
   methods: {
-    ...mapActions('posts', ['fetchPosts']), // Map actions from the posts module
-    ...mapMutations("posts", ["incrementLike", "resetLikes"]),
+    ...mapActions('posts', ['fetchPosts']), 
+    ...mapMutations("posts", ["INCREMENT_LIKE", "RESET_LIKES"]),
+    incrementLike(date) {
+      this.INCREMENT_LIKE(date); 
+    },
+    resetLikes() {
+      this.RESET_LIKES(); 
+    },
   },
 
-  resetLikesForAll() {
-      this.resetLikes(); // Resets likes for all posts
-    },
-
   created() {
-    this.fetchPosts(); // Fetch posts when the component is created
+    this.fetchPosts(); 
   },
 }
 </script>
@@ -251,7 +256,7 @@ label + .fileInputWrapper {
     display: block;
 }
 
-.reset-all-button {
+.reset-likes-button {
   background-color: red;
   color: white;
   padding: 10px;
@@ -259,6 +264,13 @@ label + .fileInputWrapper {
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 20px;
+}
+#reset-likes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px; 
+    position: relative; 
 }
 </style>
 

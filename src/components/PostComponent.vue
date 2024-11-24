@@ -27,7 +27,7 @@
     },
     methods: {
     likePost() {
-      this.$emit("like-post", this.post.date);
+      this.$emit("like-post", this.post.date); // Notify parent to update likes
     },
   },
   };
