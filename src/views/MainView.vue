@@ -12,7 +12,7 @@
             :post="post"
         />
         <div id="reset-likes-container">
-          <button id="add-post-button">Add post</button>
+          <button id="add-post-button" @click="goToAddPost">Add post</button>
           <button id="delete-all-posts" @click="deleteAll">Delete all</button>
         </div>
       </div>
@@ -65,7 +65,10 @@ export default {
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+    goToAddPost() {
+        this.$router.push({ name: 'add-post' });
+    },
   },
 
   created() {
