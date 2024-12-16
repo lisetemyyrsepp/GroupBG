@@ -60,9 +60,10 @@ router.beforeEach(async (to, from) => {
             console.log('User is authenticated. Proceeding to:', to.name);
             return true;
         }
+    } else {
+        console.log('No authentication required. Proceeding to:', to.name);
+        return true;
     }
-    console.log('No authentication required. Proceeding to:', to.name);
-    return true;
 });
 
 export default router
