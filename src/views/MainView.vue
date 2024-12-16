@@ -5,15 +5,15 @@
       <div v-if="isLoading">Loading posts...</div>
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
+        <button id="log-out-button" @click="logOut">Log out</button>
         <PostComponent
             v-for="post in allPosts"
             :key="post.date"
             :post="post"
-            @like-post="incrementLike"
-            @reset.likes="resetLikes"
         />
         <div id="reset-likes-container">
-          <button id="reset-likes-button" @click="resetLikes">Reset All Likes</button>
+          <button id="add-post-button">Add post</button>
+          <button id="delete-all-posts">Delete all</button>
         </div>
       </div>
     </div>
@@ -23,10 +23,12 @@
 
 <script>
 import PostComponent from '@/components/PostComponent.vue';
-import {mapGetters, mapMutations, mapActions } from 'vuex';
-
-// @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
+import {mapGetters, mapActions } from 'vuex';
+import axios from 'axios'
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:3000',
+  withCredentials: true
+});
 
 export default {
   name: 'MainView',
@@ -37,14 +39,20 @@ export default {
     ...mapGetters('posts', ['allPosts', 'isLoading', 'error']), 
   },
   methods: {
-    ...mapActions('posts', ['fetchPosts']), 
-    ...mapMutations("posts", ["INCREMENT_LIKE", "RESET_LIKES"]),
-    incrementLike(date) {
-      this.INCREMENT_LIKE(date); 
-    },
-    resetLikes() {
-      this.RESET_LIKES(); 
-    },
+    ...mapActions('posts', ['fetchPosts']),
+    async logOut() {
+      try {
+        const res = await axiosInstance.get('/auth/logout')
+        if (res.status === 202) {
+          this.$router.push({name: 'login'});
+        } else {
+          alert('We were unable to log you out');
+          console.warn(res.status)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 
   created() {
@@ -241,7 +249,7 @@ label + .fileInputWrapper {
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 75px; 
+    top: 75px;
     right: 0px;
     background-color: #DCDCDC;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -267,7 +275,7 @@ label + .fileInputWrapper {
 }
 #reset-likes-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
     margin-bottom: 20px; 
     position: relative; 

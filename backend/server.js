@@ -124,10 +124,7 @@ app.post('/auth/signup', async (req, res) => {
         const authUser = await pool.query(
             "INSERT INTO users(email, password) values ($1, $2) RETURNING*", [email, bcryptPassword]
         );
-
-        console.log(authUser.rows[0].id);
         const token = await generateJWT(authUser.rows[0].id);
-        console.log(token);
 
         res
             .status(201)
@@ -144,15 +141,10 @@ app.post('/auth/signup', async (req, res) => {
 app.post('/auth/login', async(req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(email)
         const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-        console.log(user.rows.length);
-        console.log(user.rows)
         if (user.rows.length === 0) return res.status(401).json({ error: "User is not registered" });
-        console.log('user')
 
         const validPassword = await bcrypt.compare(password, user.rows[0].password);
-        console.log(validPassword);
         if (!validPassword) return res.status(401).json({ error: "Incorrect password" });
 
         const token = await generateJWT(user.rows[0].id);
