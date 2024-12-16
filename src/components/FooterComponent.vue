@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="footer">
         <p>&copy; {{ currentYear }} PostIt. All rights reserved.</p>
     </footer>
 </template>
@@ -16,7 +16,7 @@ export default {
 </script>
   
 <style scoped>
-  footer {
+  .footer {
     position: fixed;
     bottom: 0;
     left: 0;

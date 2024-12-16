@@ -31,13 +31,19 @@
             <li v-for="(error, index) in passwordErrors" :key="index">{{ error }}</li>
           </ul>
         </div>
-        <button type="submit" class="signup-button">Sign Up</button>
+        <button type="submit" class="login-button">Sign Up</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:3000',
+  withCredentials: true
+});
+
 export default {
   name: 'SignUpView',
   data() {
@@ -72,13 +78,26 @@ export default {
       this.passwordErrors = errors;
       this.showError = errors.length > 0;
     },
-    handleSignup() {
+    async handleSignup() {
       this.validatePassword();
       if (this.passwordErrors.length > 0) {
         this.showError = true;
       } else {
         this.showError = false;
-        alert("Signup successful!");
+        try {
+          const res = await axiosInstance.post('/auth/signup', {
+            email: this.email,
+            password: this.password,
+          });
+          if (res.status === 201) {
+            this.$router.push({ name: 'home' });
+          } else {
+            alert('Sign up failed');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('An error occurred during sign-up.');
+        }
       }
     },
   },
@@ -132,7 +151,7 @@ input::placeholder {
   min-width: 200px;
 }
 
-.signup-button {
+.login-button {
   width: 40%;
   padding: 8px;
   background-color: #499899;
@@ -142,7 +161,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.signup-button:hover {
+.login-button:hover {
   background-color: #45a049;
 }
 

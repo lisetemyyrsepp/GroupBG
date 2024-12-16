@@ -39,9 +39,6 @@
 .nav {
     display: flex;
     align-items: center;
-    /*justify-content: center;
-    font-size: larger;
-    /*margin-left: 0.5em;*/
 }
 
 .nav a {
@@ -59,31 +56,6 @@
 
 .separator {
     font-size: 1em;
-    padding: 0 10px/*10px 15px*/;
+    padding: 0 10px;
 }
-/** 
-@media (min-width: 800px) {
-    /*.header,
-    .nav {
-        display: flex;
-    }
-    .header {
-        /*flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 1000px) {
-    .header {
-        /*flex-direction: row;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 800px) {
-    .header {
-        flex-direction: row;
-    }
-}*/
 </style>

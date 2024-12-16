@@ -1,66 +1,166 @@
 const express = require('express');
-const path = require('path'); // For handling file paths // LISATUD
+const pool = require('./database');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+const port = process.env.PORT || 3000;
+
 const app = express();
-
-// listen for requests on port 3000
-app.listen(3000);
-
-/* app.get() is used to respond to Get requests, and it takes two arguments: 
-1- arg1: represents what path/url you want to listen to (e.g., '/' listens to index path)
-2- arg2: represents a function that takes in request and response objects */
-
-app.get('/', (req, res) => {
-    // res.send can be used to send text and HTML snippets
-    //res.send('</h1>First HTML response message! </h1>');
-
-    /* res.sendFile() is a method that can be used to send files as its name indicates
-    However, it takes the absolute not the relative path to the file. Therefore, you need to specify what is the root directory.
-    To avoid this confusion, you can use  "__dirname"*/
-    res.sendFile('./views/index.html', { root: __dirname });
-    console.log(__dirname);
-});
-
-// do not write in the URL address bar the extension of the page. For example, writing (http://localhost:3000/posts.html) will direct you to the 404 page
-app.get('/posts', (req, res) => {
-    res.sendFile('./views/posts.html', { root: __dirname });
-});
-
-
-
-// We will discuss this method next week, when we speak about Middlewares
-app.use((req, res) => {
-    res.status(404).sendFile('./views/404.html', { root: __dirname });
-});
-
-
-/*
-const express = require('express');
-const path = require('path'); // For handling file paths
-const app = express();
-
-// Middleware to parse JSON bodies
+app.use(cors({origin: 'http://localhost:8080', credentials: true}));
 app.use(express.json());
+app.use(cookieParser());
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+const secret = "gdgdhdbcb770785rgdzqws";
+const maxAge = 3600;
 
-// Listen for requests on port 3000
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const generateJWT = (id) => {
+    return jwt.sign({ id }, secret, { expiresIn: maxAge })
+}
+
+
+
+// The following functions relate to posts
+
+
+app.post('/api/posts', async(req, res) => {
+    try {
+        const post = req.body;
+        const newpost = await pool.query(
+            "INSERT INTO posttable(title, body, urllink) values ($1, $2, $3)    RETURNING*", [post.title, post.body, post.urllink]
+        );
+        res.json(newpost);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
-// Serve the index.html file for the root route
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+app.get('/api/posts', async(req, res) => {
+    try {
+        const posts = await pool.query(
+            "SELECT * FROM posttable"
+        );
+        res.json(posts.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
-// Serve the posts.html file for the /posts route
-app.get('/posts', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'posts.html'));
+app.get('/api/posts/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const posts = await pool.query(
+            "SELECT * FROM posttable WHERE id = $1", [id]
+        );
+        res.json(posts.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
-// Handle 404 errors
-app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-});*/
+app.put('/api/posts/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const post = req.body;
+        const updatePost = await pool.query(
+            "UPDATE posttable SET (title, body, urllink) = ($2, $3, $4) WHERE id = $1", [id, post.title, post.body, post.urllink]
+        );
+        res.json(updatePost);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.delete('/api/posts/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const deletepost = await pool.query(
+            "DELETE FROM posttable WHERE id = $1", [id]
+        );
+        res.json(deletepost);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+
+// The following functions relate to authentication
+
+
+app.get('/auth/authenticate', async (req, res) => {
+    const token = req.cookies.jwt;
+    let authenticated = false;
+    try {
+        if (token) {
+            try {
+                await jwt.verify(token, secret);
+                console.log('author is authenticated');
+                authenticated = true;
+            } catch (err) {
+                console.log(err.message);
+                console.log('token verification failed');
+            }
+        } else {
+            console.log('author is not authenticated');
+        }
+        res.send({ "authenticated": authenticated });
+    } catch (err) {
+        console.error(err.message);
+        res.status(400).send(err.message);
+    }
+});
+
+app.post('/auth/signup', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const salt = await bcrypt.genSalt();
+        const bcryptPassword = await bcrypt.hash(password, salt);
+
+        const authUser = await pool.query(
+            "INSERT INTO users(email, password) values ($1, $2) RETURNING*", [email, bcryptPassword]
+        );
+
+        console.log(authUser.rows[0].id);
+        const token = await generateJWT(authUser.rows[0].id);
+        console.log(token);
+
+        res
+            .status(201)
+            .cookie('jwt', token, { maxAge: 6000000, httpOnly: true })
+            .json({ user_id: authUser.rows[0].id })
+            .send();
+        console.log('User added to the database');
+    } catch (err) {
+        console.error(err.message);
+        res.status(400).send(err.message);
+    }
+});
+
+app.post('/auth/login', async(req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        if (user.rows.length === 0) return res.status(401).json({ error: "User is not registered" });
+
+        const validPassword = await bcrypt.compare(password, user.rows[0].password);
+        if (!validPassword) return res.status(401).json({ error: "Incorrect password" });
+
+        const token = await generateJWT(user.rows[0].id);
+        res
+            .status(201)
+            .cookie('jwt', token, { maxAge: 6000000, httpOnly: true })
+            .json({ user_id: user.rows[0].id })
+            .send();
+    } catch (error) {
+        res.status(401).json({ error: error.message });
+    }
+});
+
+app.get('/auth/logout', (req, res) => {
+    res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
+});
