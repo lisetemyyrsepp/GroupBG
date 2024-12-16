@@ -84,6 +84,17 @@ app.delete('/api/posts/:id', async(req, res) => {
     }
 });
 
+app.delete('/api/posts/', async(req, res) => {
+    try {
+        const deletepost = await pool.query(
+            "TRUNCATE posttable"
+        );
+        res.json(deletepost);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 

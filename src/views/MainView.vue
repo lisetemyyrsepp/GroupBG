@@ -13,7 +13,7 @@
         />
         <div id="reset-likes-container">
           <button id="add-post-button">Add post</button>
-          <button id="delete-all-posts">Delete all</button>
+          <button id="delete-all-posts" @click="deleteAll">Delete all</button>
         </div>
       </div>
     </div>
@@ -51,6 +51,19 @@ export default {
         }
       } catch (error) {
         console.error(error);
+      }
+    },
+    async deleteAll() {
+      try {
+        const res = await axiosInstance.delete('/api/posts')
+        if (res.status === 200) {
+          this.$router.push({ name: 'home' });
+          console.log('Posts successfully deleted')
+        } else {
+          alert('We were unable to delete posts')
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   },
