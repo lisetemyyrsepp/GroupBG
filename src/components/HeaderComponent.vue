@@ -3,7 +3,7 @@
         <ul class="nav">
             <li><router-link to="/">Home</router-link></li>
             <li class="separator">|</li>
-            <li><router-link to="/signup">Sign Up</router-link></li>
+            <li><router-link to="/contacts">Contacts</router-link></li>
         </ul>
     </header>
 </template>

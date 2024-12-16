@@ -144,10 +144,15 @@ app.post('/auth/signup', async (req, res) => {
 app.post('/auth/login', async(req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(email)
         const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        console.log(user.rows.length);
+        console.log(user.rows)
         if (user.rows.length === 0) return res.status(401).json({ error: "User is not registered" });
+        console.log('user')
 
         const validPassword = await bcrypt.compare(password, user.rows[0].password);
+        console.log(validPassword);
         if (!validPassword) return res.status(401).json({ error: "Incorrect password" });
 
         const token = await generateJWT(user.rows[0].id);

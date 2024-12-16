@@ -54,11 +54,9 @@ export default {
   methods: {
     async handleLogIn() {
       try {
-        const res = await axiosInstance.get('/auth/login', {
-          params: {
+        const res = await axiosInstance.post('/auth/login', {
             email: this.email,
             password: this.password,
-          },
         });
         if (res.status === 201) {
           this.$router.push({ name: 'home' });
