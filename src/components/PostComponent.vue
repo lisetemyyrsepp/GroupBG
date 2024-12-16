@@ -1,5 +1,5 @@
 <template>
-    <div class="post">
+    <div class="post" @click="openPost">
       <div class="post-header">
         <div>
           <span class="post-date">{{ post.date.slice(0, 10) }}</span>
@@ -22,6 +22,9 @@ export default {
     },
   },
   methods: {
+    openPost() {
+      this.$router.push({ name: 'apost', query: {id: this.post.id} });
+    }
 },
 };
 </script>

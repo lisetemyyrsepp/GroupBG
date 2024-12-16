@@ -4,16 +4,12 @@
         <label for="apost" class="form-label">A Post</label>
         <form @submit.prevent="updatePost">
           <div class="form-group">
-            <label for="title" class="form-label">Title</label>
-            <textarea id="title" class="form-input" placeholder="Title" required spellcheck="true"></textarea>
-          </div>
-          <div class="form-group">
             <label for="body" class="form-label">Body</label>
-            <textarea id="body" class="form-input" placeholder="Body" required spellcheck="true"></textarea>
+            <textarea id="body" class="form-input" placeholder="Body" required spellcheck="true" v-model="post.body"></textarea>
           </div>
         </form>
         <div class="button-group">
-            <button @click="submit">Update</button>
+            <button type="submit" @click="updatePost">Update</button>
             <button @click="deletePost">Delete</button>
         </div>
       </div>
@@ -32,8 +28,8 @@ export default {
     data() {
       return {
         post: {
-            title: '',
-            body: '',
+          body: '',
+          date: new Date(),
         },
       };
     },
@@ -43,27 +39,33 @@ export default {
     methods: {
         async fetchPost() {
             try {
-                const response = await axiosInstance.get(`/api/posts/${this.$route.params.id}`);
-                this.post = response.data;
+                const response = await axiosInstance.get(`/api/posts/${this.$route.query.id}`, {
+                  id: this.$route.query.id,
+                });
+                this.post.body = response.data.body;
+                console.log(response.data.body);
             } catch (error) {
                 console.error('Failed to fetch post:', error);
             }
         },
         async updatePost() {
             try {
-                await axiosInstance.put(`/api/posts/${this.post.id}`, {
-                title: this.post.title,
-                body: this.post.body,
+                await axiosInstance.put(`/api/posts/${this.$route.query.id}`, {
+                  id: this.$route.query.id,
+                  body: this.post.body,
+                  date: this.post.date
                 });
-                this.fetchPost(); // Refresh the post data after update
+                this.$router.push({ name: 'home' });
             } catch (error) {
                 console.error('Failed to update post:', error);
             }
         },
         async deletePost() {
             try {
-                await axiosInstance.delete(`/api/posts/${this.post.id}`);
-                this.$router.push('/'); // Redirect to home after deletion
+                await axiosInstance.delete(`/api/posts/${this.$route.query.id}`, {
+                  id: this.$route.query.id,
+              });
+                this.$router.push({ name: 'home'});
             } catch (error) {
                 console.error('Failed to delete post:', error);
             }

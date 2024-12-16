@@ -64,7 +64,7 @@ app.put('/api/posts/:id', async(req, res) => {
         const { id } = req.params;
         const post = req.body;
         const updatePost = await pool.query(
-            "UPDATE posttable SET (title, body, urllink, date) = ($2, $3, $4, $5) WHERE id = $1", [id, post.title, post.body, post.urllink]
+            "UPDATE posttable SET (body, date) = ($2, $3) WHERE id = $1", [id, post.body, post.date]
         );
         res.json(updatePost);
     } catch (err) {
