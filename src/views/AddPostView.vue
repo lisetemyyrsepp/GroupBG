@@ -7,7 +7,7 @@
             <label for="body">Body       </label>
             <input id="body" v-model="body" placeholder="body"/>
           </div>
-          <button type="submit" @click="addPost">Add</button>
+          <button type="submit">Add</button>
         </form>
       </div>
     </div>
