@@ -1,17 +1,13 @@
 <template>
     <div class="post">
       <div class="post-header">
-        <div class="profile-picture">
-          <img :src="post.authorImage" alt="Author's profile picture" class="post-profile-pic" />
-        </div>
         <div>
-          <span class="post-date">{{ post.date }}</span>
+          <span class="post-date">{{ post.date.slice(0, 10) }}</span>
         </div>
       </div>
-        <img v-if="post.image" class="post-image" :src="post.image" alt="Post image" />
-      <div class="post-caption">{{ post.caption }}</div>
+      <div class="title">{{ post.title }}</div>
+      <div class="body">{{ post.body }}</div>
       <div class="post-footer">
-        <button @click="likePost" class="like-button">👍 {{ post.likes }}</button>
       </div>
     </div>
   </template>
@@ -26,9 +22,6 @@ export default {
     },
   },
   methods: {
-  likePost() {
-    this.$emit("like-post", this.post.date); // Notify parent to update likes
-  },
 },
 };
 </script>
@@ -42,11 +35,6 @@ export default {
   background-color: var(--box-color);
 }
 
-.reset-button {
-  background-color: var(--primary-color);
-  color: white;
-}
-
 .post-header {
   display: flex;
   justify-content: space-between;
@@ -54,24 +42,11 @@ export default {
   margin-bottom: 5px;
 }
 
-.post-profile-pic {
-  width: 64px;
-  height: 64px;
-  border-radius: 15%;
-}
-
 .post-date {
   font-size: 0.9em;
 }
 
-.post-image {
-  width: 100%;
-  height: auto;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-
-.post-caption, .post-message {
+.body {
   font-size: 1em;
   margin-top: 10px;
   text-align: left;
@@ -81,12 +56,5 @@ export default {
   display: flex;
   justify-content: flex-start;
   margin-top: 10px;
-}
-
-.like-button {
-  width: 50px;
-  height: auto;
-  cursor: pointer;
-  background-color: var(--secondary-color);
 }
 </style>

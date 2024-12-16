@@ -28,7 +28,7 @@ app.post('/api/posts', async(req, res) => {
     try {
         const post = req.body;
         const newpost = await pool.query(
-            "INSERT INTO posttable(title, body, urllink) values ($1, $2, $3)    RETURNING*", [post.title, post.body, post.urllink]
+            "INSERT INTO posttable(body) values ($1)    RETURNING*", [post.body]
         );
         res.json(newpost);
     } catch (err) {
@@ -64,7 +64,7 @@ app.put('/api/posts/:id', async(req, res) => {
         const { id } = req.params;
         const post = req.body;
         const updatePost = await pool.query(
-            "UPDATE posttable SET (title, body, urllink) = ($2, $3, $4) WHERE id = $1", [id, post.title, post.body, post.urllink]
+            "UPDATE posttable SET (title, body, urllink, date) = ($2, $3, $4, $5) WHERE id = $1", [id, post.title, post.body, post.urllink]
         );
         res.json(updatePost);
     } catch (err) {

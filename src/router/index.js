@@ -23,32 +23,30 @@ const routes = [{
         path: '/',
         name: 'home',
         component: MainView,
-        meta: {requiresAuth: true}
     },
     {
         path: '/signup',
         name: 'signup',
         component: SignUpView,
-        meta: {requiresAuth: false}
+        meta: {noAuth: true}
     },
     {
         path: '/contacts',
         name: 'contacts',
         component: () =>
             import ( /* webpackChunkName: "contacts" */ '../views/ContactsView.vue'),
-        meta: {requiresAuth: false}
+        meta: {noAuth: true}
     },
     {
         path: '/login',
         name: 'login',
         component: LoginView,
-        meta: {requiresAuth: false}
+        meta: {noAuth: true}
     },
     {
         path: '/add-post',
         name: 'add-post',
-        component: AddPostView,
-        meta: {requiresAuth: false}
+        component: AddPostView
     }
 ]
 
@@ -58,7 +56,10 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-    if (to.meta.requiresAuth) {
+    if (to.meta.noAuth) {
+        console.log('No authentication required. Proceeding to:', to.name);
+        return true;
+    } else {
         const isAuthenticated = await checkAuthentication();
         if (!isAuthenticated) {
             console.warn('User is not authenticated. Redirecting to login.');
@@ -67,9 +68,6 @@ router.beforeEach(async (to, from) => {
             console.log('User is authenticated. Proceeding to:', to.name);
             return true;
         }
-    } else {
-        console.log('No authentication required. Proceeding to:', to.name);
-        return true;
     }
 });
 

@@ -1,17 +1,19 @@
 <template>
   <div class="main">
     <div class="sidebar-left"></div>
-    <div class="content">
+    <div class="content" :key="componentKey">
       <div v-if="isLoading">Loading posts...</div>
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
-        <button id="log-out-button" @click="logOut">Log out</button>
+        <div class="button-container1">
+          <button id="log-out-button" @click="logOut">Log out</button>
+        </div>
         <PostComponent
             v-for="post in allPosts"
             :key="post.date"
             :post="post"
         />
-        <div id="reset-likes-container">
+        <div class="button-container2">
           <button id="add-post-button" @click="goToAddPost">Add post</button>
           <button id="delete-all-posts" @click="deleteAll">Delete all</button>
         </div>
@@ -31,6 +33,11 @@ const axiosInstance = axios.create({
 });
 
 export default {
+  data() {
+    return {
+      componentKey: 0,
+    };
+  },
   name: 'MainView',
   components: {
     PostComponent,
@@ -57,7 +64,7 @@ export default {
       try {
         const res = await axiosInstance.delete('/api/posts')
         if (res.status === 200) {
-          this.$router.push({ name: 'home' });
+          this.componentKey += 1
           console.log('Posts successfully deleted')
         } else {
           alert('We were unable to delete posts')
@@ -289,7 +296,14 @@ label + .fileInputWrapper {
   cursor: pointer;
   margin-bottom: 20px;
 }
-#reset-likes-container {
+.button-container1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.button-container2 {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
