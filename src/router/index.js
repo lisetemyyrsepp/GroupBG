@@ -4,6 +4,7 @@ import MainView from '../views/MainView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import LoginView from '../views/LoginView.vue'
 import AddPostView from '@/views/AddPostView.vue';
+import ApostView from '../views/ApostView.vue'
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -47,6 +48,11 @@ const routes = [{
         path: '/add-post',
         name: 'add-post',
         component: AddPostView
+    },
+    {
+        path: '/apost',
+        name: 'apost',
+        component: ApostView
     }
 ]
 
